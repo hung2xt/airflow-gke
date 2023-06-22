@@ -1962,13 +1962,13 @@ dags:
     ## optional subpath for dag volume mount
     subPath: ~
   gitSync:
-    enabled: false
+    enabled: true
 
     # git repo clone url
     # ssh example: git@github.com:apache/airflow.git
     # https example: https://github.com/apache/airflow.git
     repo: https://github.com/hung2xt/airflow-gke.git
-    branch: v2-2-stable
+    branch: main
     rev: HEAD
     depth: 1
     # the number of consecutive failures allowed before aborting
