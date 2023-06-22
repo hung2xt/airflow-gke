@@ -1,2 +1,2 @@
-tornado
+apache-airflow-providers-google==6.3.0
 
