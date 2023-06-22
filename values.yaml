@@ -62,7 +62,7 @@ images:
   airflow:
     repository: us-central1-docker.pkg.dev/sawyer-work-1804/airflow-gke/airflow-plugins-dependencies
     tag: 1.0.0
-    # Specifying digest takes precedence over tag.
+    ## Specifying digest takes precedence over tag.
     digest: ~
     pullPolicy: IfNotPresent
   # To avoid images with user code, you can turn this to 'true' and
