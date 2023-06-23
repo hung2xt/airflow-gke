@@ -57,14 +57,14 @@ class ExampleDataToGCSOperator(BaseOperator):
 with DAG(
     'create_and_write_example_data_to_gcs',
     start_date=datetime(2023, 6, 23),
-    schedule_interval='@daily'
+    schedule_interval='/2 * * * *',
 ) as dag:
 
     create_and_write_example_data = ExampleDataToGCSOperator(
         task_id='create_example_data',
         run_date='{{ ds }}',
         gcp_conn_id='airflow_gke_gcs_conn_id',
-        gcs_bucket='example-data-bucket'
+        gcs_bucket='github_tf'
     )
 
     create_and_write_example_data
