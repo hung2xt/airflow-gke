@@ -46,10 +46,10 @@ securityContext: {}
 airflowHome: /opt/airflow
 
 # Default airflow repository -- overridden by all the specific images below
-defaultAirflowRepository: apache/airflow
+defaultAirflowRepository: airflow-c
 
 # Default airflow tag to deploy
-defaultAirflowTag: "2.5.3"
+defaultAirflowTag: "v1"
 
 # Default airflow digest. If specified, it takes precedence over tag
 defaultAirflowDigest: ~
@@ -60,7 +60,7 @@ airflowVersion: "2.5.3"
 # Images
 images:
   airflow:
-    repository: 
+    repository: ~ #gcr.io/sawyer-work-1804/airflow-c
     tag: ~
     # Specifying digest takes precedence over tag.
     digest: ~
