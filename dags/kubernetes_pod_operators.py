@@ -28,7 +28,9 @@ env_var = [k8s.V1EnvVar(name='FOO', value='foo'), k8s.V1EnvVar(name='BAR', value
 configmaps = [k8s.V1EnvFromSource(config_map_ref=k8s.V1ConfigMapEnvSource(name='my-configs'))]
 
 ingest_data = KubernetesPodOperator(
-            image="example_app:test",
+            namespace="airflow",
+            image="docker.io/hungnp1994/example_app:test",
+            image_pull_secrets=[k8s.V1LocalObjectReference('example-app')],
             arguments=["ingest-data"],
             env_vars=env_var,
             env_from=configmaps,
@@ -40,7 +42,9 @@ ingest_data = KubernetesPodOperator(
         )
 
 load_data = KubernetesPodOperator(
-            image="example_app:test",
+            namespace="airflow",
+            image="docker.io/hungnp1994/example_app:test",
+            image_pull_secrets=[k8s.V1LocalObjectReference('example-app')],
             arguments=["load-data"],
             name=f"load_data",
             task_id=f"load_data",
