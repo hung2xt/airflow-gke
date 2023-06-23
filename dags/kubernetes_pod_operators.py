@@ -20,7 +20,7 @@ default_args = {
 dag = DAG('hello_KubePodOp',
           default_args=default_args,
           description='Kubernetes Pod Operator - Demonstration Dag',
-          schedule_interval='0 12 * * *',
+          schedule_interval='*/2 * * * *',
           start_date=datetime(2017, 3, 20),
           catchup=False)
 
