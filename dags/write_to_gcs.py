@@ -57,7 +57,7 @@ class ExampleDataToGCSOperator(BaseOperator):
 with DAG(
     'create_and_write_example_data_to_gcs',
     start_date=datetime(2023, 6, 23),
-    schedule_interval='/2 * * * *',
+    schedule_interval='*/2 * * * *',
 ) as dag:
 
     create_and_write_example_data = ExampleDataToGCSOperator(
