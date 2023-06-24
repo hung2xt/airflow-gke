@@ -1,8 +1,8 @@
 from airflow import DAG
 from datetime import datetime
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
-from kube_secrets import DBT_SERVICE_ACCOUNT, GIT_SECRET_ID_RSA_PRIVATE
-from airflow_utils import kube_pod_defaults, dbt_setup_cmds, DBT_IMAGE
+# from kube_secrets import DBT_SERVICE_ACCOUNT, GIT_SECRET_ID_RSA_PRIVATE
+# from airflow_utils import kube_pod_defaults, dbt_setup_cmds, DBT_IMAGE
 from kubernetes.client import models as k8s
 
 PROJECT_ID = "sawyer-work-1804"
