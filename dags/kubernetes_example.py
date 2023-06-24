@@ -2,8 +2,8 @@ from airflow import DAG
 from datetime import datetime, timedelta
 from airflow.contrib.operators.kubernetes_pod_operator import KubernetesPodOperator
 from airflow.operators.dummy_operator import DummyOperator
-
-from airflow_utils import pod_env_vars, DBT_IMAGE
+from kubernetes.client import models as k8s
+# from airflow_utils import pod_env_vars, DBT_IMAGE
 
 
 default_args = {
@@ -17,7 +17,7 @@ default_args = {
     # "retry_delay": timedelta(minutes=5),
 }
 
-dag = DAG("kubernetes_sample", default_args=default_args, schedule_interval="@once",)
+dag = DAG("kubernetes_sample", default_args=default_args, schedule_interval="*/2 * * * *",)
 
 
 start = DummyOperator(task_id="run_this_first", dag=dag)
@@ -25,7 +25,7 @@ start = DummyOperator(task_id="run_this_first", dag=dag)
 # intentionally pointing to "default" kubernetes namespace to illustrate that pods can run in different environments
 # "default" should work for cloud composer as well
 passing_python = KubernetesPodOperator(
-    namespace="default",
+    namespace="airflow",
     image="python:3.7-slim",
     cmds=["python", "-c"],
     arguments=["print('hello world')"],
@@ -37,7 +37,7 @@ passing_python = KubernetesPodOperator(
 )
 
 passing_bash = KubernetesPodOperator(
-    namespace="default",
+    namespace="airflow",
     image="ubuntu:16.04",
     cmds=["/bin/bash", "-cx"],
     arguments=["echo hello world"],
@@ -49,8 +49,9 @@ passing_bash = KubernetesPodOperator(
 )
 
 private_gcr_passing = KubernetesPodOperator(
-    namespace="default",
-    image=DBT_IMAGE,
+    namespace="airflow",
+    image="docker.io/hungnp1994/dbt_docker:v1",
+    image_pull_secrets=[k8s.V1LocalObjectReference('dbt-secret-docker')],
     cmds=["python", "-c"],
     arguments=["print('hello world')"],
     labels={"foo": "bar"},
@@ -58,7 +59,6 @@ private_gcr_passing = KubernetesPodOperator(
     task_id="private-gcr-passing-task",
     get_logs=True,
     # Storing sensitive credentials in env_vars will be exposed in plain text
-    env_vars=pod_env_vars,
     dag=dag,
 )
 
