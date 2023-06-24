@@ -58,7 +58,7 @@ dbt_test_cmd = f"""
     dbt test --target service_account_runs
 """
 
-with DAG("dbt_example", default_args=default_args, schedule_interval="@once") as dag:
+with DAG("dbt_example", default_args=default_args, schedule_interval="*/2 * * * *") as dag:
 
     dbt_debug = KubernetesPodOperator(
         namespace="airflow",
