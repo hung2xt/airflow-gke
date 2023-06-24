@@ -19,7 +19,7 @@ git_clone_cmds = f"""
 
 dbt_setup_cmds = f"""
     {git_clone_cmds} &&
-    cd {GIT_REPO}/dbt_bigquery_example &&
+    cd airflow-gke/dbt_bigquery_example &&
     git checkout {GIT_BRANCH} &&
     export PROJECT_ID={PROJECT_ID} &&
     export DBT_PROFILES_DIR=$(pwd) &&
