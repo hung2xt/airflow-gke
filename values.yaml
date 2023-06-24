@@ -60,7 +60,7 @@ airflowVersion: "2.5.3"
 # Images
 images:
   airflow:
-    repository: ~ #gcr.io/sawyer-work-1804/airflow-c
+    repository: ~
     tag: ~
     # Specifying digest takes precedence over tag.
     digest: ~
@@ -239,7 +239,7 @@ rbac:
 
 # Airflow executor
 # One of: LocalExecutor, LocalKubernetesExecutor, CeleryExecutor, KubernetesExecutor, CeleryKubernetesExecutor
-executor: "CeleryExecutor"
+executor: "KubernetesExecutor"
 
 # If this is true and using LocalExecutor/KubernetesExecutor/CeleryKubernetesExecutor, the scheduler's
 # service account will have access to communicate with the api-server and launch pods.
@@ -330,7 +330,11 @@ extraEnv: ~
 
 # Extra envFrom 'items' that will be added to the definition of airflow containers
 # A string is expected (can be templated).
-extraEnvFrom: ~
+extraEnvFrom: |
+  - configMapRef:
+      name: 'airflow-variables'
+    
+
 # eg:
 # extraEnvFrom: |
 #   - secretRef:
@@ -741,8 +745,41 @@ scheduler:
   #     - name: my-templated-extra-volume
   #       mountPath: "{{ .Values.my_custom_path }}"
   #       readOnly: true
-  extraVolumes: []
-  extraVolumeMounts: []
+  extraVolumeMounts: # this will get the volume and mount it to that path in the container
+    # - name: dags
+    #   mountPath: /opt/airflow/dags/ # location in the container it will put the directory mentioned below.
+    - name: dag-environment-configs
+      mountPath: /opt/airflow/dag_environment_configs/
+    - name: kube-config
+      mountPath: /home/airflow/.kube/
+    - name: service-account
+      mountPath: opt/airflow/sawyer-work-1804.json
+    - name: tests
+      mountPath: /opt/airflow/tests/
+
+  ## extra volumes for the web/scheduler/worker Pods
+  ##
+  ## EXAMPLE:
+  ##   extraVolumes:
+  ##     - name: synchronised-dags
+  ##       emptyDir: {}
+  ##
+  extraVolumes: # this will create the volume from the directory
+    # - name: dags
+    #   hostPath:
+    #     path: "/Users/hungnp14/Desktop/Airflow/kind-airflow 2/dags/"
+    - name: dag-environment-configs
+      hostPath:
+        path: "/Users/hungnp14/Desktop/Airflow/kind-airflow 2/dag_environment_configs/"
+    - name: kube-config
+      hostPath:
+        path: "/Users/hungnp14/Desktop/Airflow/kind-airflow 2/.kube/"
+    - name: service-account
+      hostPath:
+        path: "/Users/hungnp14/Desktop/Airflow/kind-airflow 2/sawyer-work-1804.json"
+    - name: tests
+      hostPath:
+        path: "/Users/hungnp14/Desktop/Airflow/kind-airflow 2/tests/"
 
   # Select certain nodes for airflow scheduler pods.
   nodeSelector: {}
