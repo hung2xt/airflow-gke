@@ -25,7 +25,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Configure Docker Client
-        run: gcloud auth configure-docker $GCP_REGION-docker.pkg.dev --quiet
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |-
