@@ -1,7 +1,7 @@
 from airflow import DAG
 from airflow.providers.cncf.kubernetes.operators.kubernetes_pod import KubernetesPodOperator
 from datetime import datetime, timedelta
-
+from airflow.operators.dummy_operator import DummyOperator
 from kubernetes.client import models as k8s
 
 default_args = {
