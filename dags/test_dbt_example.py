@@ -24,6 +24,8 @@ dag = DAG('Dbt-Airflow',
           start_date=datetime(2023, 6, 23),
           catchup=False)
 
+start = DummyOperator(task_id="run_this_first", dag=dag)
+
 migrate_data = KubernetesPodOperator(
         namespace='default',
         image='us-central1-docker.pkg.dev/sawyer-work-1804/airflow-dbt-gke/dbt-transformations:latest',
@@ -35,8 +37,9 @@ migrate_data = KubernetesPodOperator(
         ],
         name="dbt_transformations",
         task_id="dbt_transformations",
-        get_logs=True
+        get_logs=True,
+        dag=dag
     )
 
-migrate_data
+start >> migrate_data
 
