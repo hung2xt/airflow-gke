@@ -38,5 +38,5 @@ migrate_data = KubernetesPodOperator(
         get_logs=True
     )
 
-
+migrate_data
 
