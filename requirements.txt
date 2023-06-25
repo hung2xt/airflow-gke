@@ -1,1 +1,5 @@
-apache-airflow-providers-apache-spark
+# apache-airflow-providers-apache-spark
+dbt-core==1.2.0
+dbt-postgres==1.2.0
+dbt-bigquery==1.2.0
+pytz
