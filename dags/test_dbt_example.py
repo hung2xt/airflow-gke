@@ -27,7 +27,7 @@ dag = DAG('Dbt-Airflow',
 start = DummyOperator(task_id="run_this_first", dag=dag)
 
 migrate_data = KubernetesPodOperator(
-        namespace='default',
+        namespace='airflow',
         image='us-central1-docker.pkg.dev/sawyer-work-1804/airflow-dbt-gke/dbt-transformations:latest',
         image_pull_policy='Always',
         image_pull_secrets=[k8s.V1LocalObjectReference('airflow-dbt')],
