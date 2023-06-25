@@ -28,8 +28,8 @@ start = DummyOperator(task_id="run_this_first", dag=dag)
 
 migrate_data = KubernetesPodOperator(
         namespace='airflow',
-        image='us-central1-docker.pkg.dev/sawyer-work-1804/airflow-dbt-gke/dbt-transformations:latest',
-        image_pull_secrets= 'gcr-key',
+        image='gcr.io/sawyer-work-1804/airflow-dbt-gke/dbt-transformations:latest',
+        image_pull_secrets=[k8s.V1LocalObjectReference('gcr-key')],
         cmds=["dbt", "run"],
         arguments=[
             "--project-dir", "./dbt_project_4", "--profiles-dir", "./dbt_project_4/profiles"
