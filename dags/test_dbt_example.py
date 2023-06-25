@@ -40,19 +40,20 @@ migrate_data = KubernetesPodOperator(
         dag=dag
     )
 
-docker_host_container = KubernetesPodOperator(
-        namespace='airflow',
-        image='docker.io/hungnp1994/dbt-transformations:latest',
-        image_pull_secrets=[k8s.V1LocalObjectReference('dbt-docker-alpha')],
-        cmds=["dbt", "run"],
-        arguments=[
-            "--project-dir", "./dbt_project_4", "--profiles-dir", "./dbt_project_4/profiles"
-        ],
-        name="dbt_transformations",
-        task_id="dbt_transformations_with_docker_host",
-        get_logs=True,
-        dag=dag
-    )
+# docker_host_container = KubernetesPodOperator(
+#         namespace='airflow',
+#         image='docker.io/hungnp1994/dbt-transformations:latest',
+#         image_pull_secrets=[k8s.V1LocalObjectReference('dbt-docker-alpha')],
+#         cmds=["dbt", "run"],
+#         arguments=[
+#             "--project-dir", "./dbt_project_4", "--profiles-dir", "./dbt_project_4/profiles"
+#         ],
+#         name="dbt_transformations",
+#         task_id="dbt_transformations_with_docker_host",
+#         get_logs=True,
+#         dag=dag
+#     )
 
-start >> [docker_host_container, migrate_data]
+# start >> [docker_host_container, migrate_data]
 
+start >> migrate_data
