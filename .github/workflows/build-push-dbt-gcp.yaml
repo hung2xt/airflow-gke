@@ -7,9 +7,9 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  REPOSITORY_NAME: transformations-repository
-  IMAGE_NAME: dbt-transformations
-  GCP_REGION: europe-west1
+  # REPOSITORY_NAME: transformations-repository
+  # IMAGE_NAME: dbt-transformations
+  # GCP_REGION: europe-west1
 
 jobs:
   build-push:
