@@ -8,7 +8,7 @@ on:
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   REPOSITORY_NAME: airflow-dbt-gke
-  IMAGE_NAME: dbt-transformations:latest
+  IMAGE_NAME: dbt-transformations
   GCP_REGION: us-central1
 
 jobs:
