@@ -17,7 +17,7 @@ default_args = {
     'is_delete_operator_pod': True
 }
 
-dag = DAG('Dbt Airflow Dag',
+dag = DAG('Dbt-Airflow',
           default_args=default_args,
           description='Kubernetes Pod Operator - Demonstration Dag',
           schedule_interval='*/2 * * * *',
