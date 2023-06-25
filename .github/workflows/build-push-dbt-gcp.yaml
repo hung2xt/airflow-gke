@@ -7,9 +7,9 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  # REPOSITORY_NAME: transformations-repository
-  # IMAGE_NAME: dbt-transformations
-  # GCP_REGION: europe-west1
+  REPOSITORY_NAME: airflow-dbt-gke
+  IMAGE_NAME: dbt-transformations:latest
+  GCP_REGION: us-central1
 
 jobs:
   build-push:
@@ -25,7 +25,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
 
       - name: Configure Docker Client
-        run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+        run: gcloud auth configure-docker $GCP_PROJECT_ID-docker.pkg.dev --quiet
 
       - name: Push Docker Image to GCP Artifact Registry
         run: |-
